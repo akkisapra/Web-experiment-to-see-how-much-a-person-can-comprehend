@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Data Visualization Survey</title>
+<link href="vcss/general.css" rel="stylesheet" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+var userid;
+var start;
+var prev;
+
+function init(){
+	start = new Date().getTime();
+	
+	$.ajax({
+		type: 'POST',
+		url: "cgi-bin/updateuserid.py", // this is just a url that is responsible to return files list 
+		data: "{}",
+		dataType: "json",
+		success: function (response) {
+			userid = response.user;
+			if (userid == 0) alert("folder exists");
+			console.log(userid);
+		},
+		error: function (myerror) {
+			alert(myerror);
+		}
+
+	});
+	
+	var myresults = [];
+
+	var rad = document.getElementsByName('mygroup1');
+	prev = document.getElementById('never');
+	
+	for (var i = 0; i < rad.length; i++) {
+		rad[i].addEventListener('change', function() {
+			(prev) ? console.log(prev.value): null;
+			if (this !== prev) {
+				if(this.value == 'seldom' || this.value == 'often') {
+					document.getElementById('elaboration_wrapper').style.visibility = "visible";
+				}
+				else {
+					document.getElementById('elaboration_wrapper').style.visibility = "hidden";
+				}
+				prev = this;
+			}
+			console.log(this.value)
+		});
+	}
+
+    document.getElementById('next').onclick=function(){
+		var end = new Date().getTime();
+		var duration = end - start;
+		
+		for (var radioname = 1; radioname < 5; radioname++){
+			var radios = document.getElementsByName('mygroup'+String(radioname));
+			for (var i = 0, length = radios.length; i < length; i++) {
+				if (radios[i].checked) {
+					myresults.push(radios[i].value);
+					break;
+				}
+			}		
+		}
+		
+		if(document.getElementById("elaboration").value != undefined && document.getElementById("elaboration").value != null && document.getElementById("elaboration").value != "")
+			myresults.push("elaboration - "+document.getElementById("elaboration").value);
+		
+		//var answers = [myresult1, myresult2];
+		var answers = myresults;
+
+		var backgroundjson = {"filename":"background","userid":userid,"answers":answers, "duration":duration};
+		$.ajax({
+			type: 'POST',
+			url: 'cgi-bin/savetofile.py',//url of receiver file on server
+			dataType: "json",
+			data: JSON.stringify(backgroundjson), //your data
+			success: function (response) {
+				window.location.replace('background_2.html');
+			}
+		});
+	}
+}
+	
+window.onload=init;
+</script>
+
+</head>
+<body>
+	<div class="main_div">
+	<h4>This is an example of a Bar Chart</h4>
+	<a href="#">
+	<img id="linechart" src="images/tutorial/barchart_example.jpg" alt="https://datavizcatalogue.com/methods/bar_chart.html" />
+	</a>
+	
+	<br />
+	<br />
+	
+	<h4>Which describes your situation best?</h4>
+	<input type="radio" name="mygroup1" id="never" value="never" checked />
+	<label for="never">I have never seen Line graphs</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup1" id="moderate" value="seldom" />
+	<label for="moderate">I occasionally see Line graphs</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup1" id="expert" value="often" />
+	<label for="expert">I often see Line graphs</label>
+	<br />
+	<br />
+	
+	<div style="visibility: hidden" id="elaboration_wrapper">Please specify where have you read Line Graph, e.g., school, workplace, etc.<br />
+		<textarea id="elaboration" name="elaboration" style="width:800px;height:50px;" placeholder="Your answer"></textarea>
+	</div>
+	<br />
+
+	<h4>What describes your gender best?</h4>
+	<input type="radio" name="mygroup3" id="male" value="male" checked />
+	<label for="male">Male</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup3" id="female" value="female" />
+	<label for="female">Female</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup3" id="other" value="other" />
+	<label for="other">Other/Intersex</label>
+	
+	<br />
+	<br />
+	
+	<h4>Which range does your age fall into?</h4>
+	<input type="radio" name="mygroup4" id="-20" value="-20" checked />
+	<label for="-20"><20</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup4" id="20-30" value="20-30" />
+	<label for="20-30">20-30</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup4" id="30-40" value="30-40" />
+	<label for="30-40">30-40</label>
+	<br />
+	<br />
+	<input type="radio" name="mygroup4" id="40-50" value="40-50" />
+	<label for="40-50">40-50</label>
+	<br />
+	<br />
+	<input type="radio" name="mygroup4" id="50-" value="50-" />
+	<label for="50-">>50</label>
+	
+	<br />
+	<br />
+	
+	<br />
+	<br />
+
+	<div align=center>
+	<button type="button" id="next">Next</button>
+	</div>
+</body>
+</html>

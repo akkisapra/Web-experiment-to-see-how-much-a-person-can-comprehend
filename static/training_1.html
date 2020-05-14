@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Data Visualisation Study</title>
+<link href="../vcss/general.css" rel="stylesheet" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+ function init(){
+     start = new Date().getTime();    
+     
+ }
+ 
+window.onload=init;
+ 
+</script>
+
+</head>
+<body>
+	<div class="main_div" align=left>
+		<div>
+<!--			<div style="min-height:100px; ">-->
+				<h4>This is an example of a Line Graph</h4>
+                <p>This is an example of a single line (one line is present) graph. Value on Y-axis increases with increase of value on X-axis, which means the graph is possitively corelated.</p><br>
+                <img id="linechart" src="../images/demo/line-graph.jpg" align = center />
+                <br />
+                <p>Which describes your situation best?</p>
+                <input type="radio" name="mc" id="never" value="never"  />
+                <label for="never">I have never seen Line graphs</label> 
+                <br />
+                <input type="radio" name="mc" id="moderate" value="seldom" />
+                <label for="moderate">I occasionally see Line graphs</label> 
+                <br />
+                <input type="radio" name="mc" id="expert" value="often" />
+                <label for="expert">I often see Line graphs</label>
+                <br />
+
+            
+            <form id ="quiz" name ="quiz" align =left>
+            <p> What kind of graph do you see ?</p>
+            <input  type	= "radio"  id	= "1"  name	= "mc0"  value	= "Line Graph"> Line Graph<br>
+            <input  type	= "radio"  Id	= "1"  name	= "mc0"  value	= "Bar Chart"> Bar Chart<br>
+            <input  type	= "radio"  Id	= "1"  name	= "mc0"  value	= "Node Link Diagram"> Node Link Diagram<br>
+            <input  type	= "radio"  Id	= "1"  name	= "mc0"  value	= "No Idea"> No Idea<br>
+
+            <p>The Graph is possitively corelated?</p>
+            <input  type	= "radio"  id	= "2"  name	= "mc1"  value	= "True"> True<br>
+            <input  type	= "radio"  Id	= "2"  name	= "mc1"  value	= "False"> False<br>
+
+            <p>How many lines are present in the Line Graph</p>
+
+            <input  type	= "radio"  id	= "3"  name	= "mc2"  value = "1"> 1 <br>
+            <input  type	= "radio"  id	= "3"  name	= "mc2"  value = "2"> 2 <br>
+            <input  type	= "radio"  id	= "3"  name	= "mc2"  value = "3"> 3 <br>
+            <input  type	= "radio"  id	= "3"  name	= "mc2"  value = "4"> 4 <br>
+
+        </form>
+            
+		<div align="center">
+<!--			<button type="button" id="previous">Previous</button>-->
+			<button type="button" id="next" onclick = next()>Next</button>
+		</div>
+	</div>
+    <script src="../src/new.js">  </script>
+        
+    <script>
+           function next(){
+        if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer all the questions.");
+             return;
+        }
+        if (!document.querySelectorAll('input[name=mc1]:checked').length) {
+            alert("Please answer all the questions.");
+             return;
+        }
+        if (!document.querySelectorAll('input[name=mc2]:checked').length) {
+            alert("Please answer all the questions.");
+             return;
+        }
+        save()
+    }
+    
+function save(){
+    d3.json("data/users.json",function(strUsers){
+        var users = JSON.parse(strUsers);
+		userid = users.usercount;
+        var answers= document.querySelector('input[name="mc"]:checked').value;
+        var end = new Date().getTime();
+		var duration = end - start;
+//        answers.push(document.getElementsByName("mc").value);
+//        console.log(userid)
+//        console.log(answers)
+//        console.log(duration)
+//        
+        var savejson = {"filename":"Linegraphs","userid":userid,"answers":answers, "duration":duration};
+		$.ajax({
+			type: 'POST',
+			url: 'cgi-bin/savetofile.py',//url of receiver file on server
+			dataType: "json",
+			data: JSON.stringify(savejson), //your data
+			success: function (response) {
+				window.location.replace('/static/train/training_2.html');
+			}
+		});
+        
+    });
+    
+}
+</script>
+</body>
+</html>

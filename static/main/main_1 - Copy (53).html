@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Data Visualisation Study</title>
+<link href="../vcss/radio.css" rel="stylesheet" type="text/css">
+<!--<script src='../js/stats.js-master/build/stats.min.js'>  </script>-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>    
+
+
+</head>
+<body >
+    <form method="POST">
+	<div class="main_div" align=left>
+		<div style="min-height:100px; ">
+            <h4 id ='header'>Try to Focus on the <span style ="color:red">red plus</span> on the center of the screen.            
+            A graph will be displayed for <span style ="color:red"> <b>less than a second</b></span>, try to look at it and answer the questions</h4>
+                <div style="min-height:100px; "align =center>
+                <img id="redcross" src="../images/tutorial/red_cross.jpg" height="400" width="500"/>
+                <img id="linechart" src="../images/new_graphs/main/178.png" height="400" width="500" align ="absolute"/>
+                <img id="grid" src="../images/grid/grid.jpg" height="400" width="500"/>
+                <div id='space' style="background-color:red; min-height:50px; line-height: 50px; text-align: center; width:800px; margin-top:80px">
+				<p style="font-weight:bold; color:white">PRESS SPACE WHEN READY</p>
+			    </div>
+                <form id="task">
+                <div id = "que">
+                    <p> What kind of graph do you see ?</p>
+                    <input type ='radio' name ='mc' value ='Scatter Plot' required>Scatter Plot<br><br>
+                    <input type ='radio' name ='mc' value ='Line Graph' required>Line Graph<br><br>
+                    <input type ='radio' name ='mc' value ='Bar Chart' required>Bar Chart<br><br>
+                    <input type ='radio' name ='mc' value ='Pie Chart' required >Pie Chart<br><br>
+                    <input type ='radio' name ='mc' value ='Node Link Diagram' required >Node Link Diagram<br><br>
+
+                    <div align='center'>
+                    <br>			
+                    <button type='button' id='next' onclick = next_que()>Next</button>	
+                    </div>
+                    
+                </div>
+                 </form>
+                    <pre id="log">
+                    </pre>
+        </div>
+    </div>
+        </div>
+    </form>
+    <script>
+        var q1_start;
+        var q2_start;
+        var q3_start;
+
+          var linechart = document.getElementById("linechart");
+          var grid = document.getElementById("grid");
+          var redcross = document.getElementById("redcross");
+          var space = document.getElementById("space");
+          var que = document.getElementById("que");
+          var header = document.getElementById("header");
+          var reqanimationreference;
+          var time;
+//          var stats = new Stats();
+          var key = 0;
+         
+//        stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
+//        document.body.appendChild( stats.dom );
+
+          linechart.style.display = "none";
+          grid.style.display = "none";
+          que.style.display = "none";
+          redcross.style.display='inline'
+        
+        document.body.onkeyup = function(e){
+    if(e.keyCode == 32){
+        key++;
+        if (key ==1){
+                 window.requestAnimationFrame(show)
+                 setTimeout(hide,96);
+
+                }
+        
+                }
+            };
+        
+        function hide(){
+            window.requestAnimationFrame(function(){
+            linechart.style.display = "none";
+            redcross.style.display='none' ;
+            grid.style.display = "inline";
+//            stats.end();
+            
+            setTimeout(ques,16);
+            })
+
+        };
+        
+        function show(){
+//            stats.begin();  
+            header.style.display = "none";
+            redcross.style.display='none';
+            linechart.style.display = "inline";
+            grid.style.display = "none";
+            space.innerHTML = "";
+            space.style.display='none';
+        };
+        
+        function ques(){
+            window.requestAnimationFrame(function(){ 
+             redcross.style.display='none';
+            linechart.style.display = "none";
+            grid.style.display = "none";
+            que.style.display='block'
+            q1_start = new Date().getTime();
+
+                
+            })
+        }
+    </script>
+    
+<script>
+    var ans=[]
+    var duration=[]
+    function init(){
+        var page_time = new Date().getTime();
+
+    }
+    
+    
+    function next_que(){
+        if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer the question.");
+             return;
+        }
+        var q1_end = new Date().getTime();
+        ans.push(document.querySelector('input[name=mc]:checked').value);
+        duration.push(q1_end - q1_start)
+
+        q2_start = new Date().getTime();
+        que.innerHTML = "<p>How many elements (lines, clusters, bars, sections/slices) are present in the Line Graph ?</p>\
+            <input  type	= 'radio'  name	= 'mc'  value = '1' required> 1 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '2'> 2 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '3'> 3 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '4'> 4 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '4'> 5 <br>\
+        <div align='center'><br><br>			<button type='button' id='next' onclick = move()>Next</button>		</div>";
+    };
+    
+    function move(){
+        if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer the question.");
+             return;
+        };
+        var q2_end = new Date().getTime();
+        ans.push(document.querySelector('input[name=mc]:checked').value);
+        duration.push(q2_end-q2_start)
+        
+        d3.json("../data/users.json",function(strUsers){
+        var users = JSON.parse(strUsers);
+		userid = users.usercount;
+        var backgroundjson = {"filename":"main_54","userid":userid,"answers":ans, "duration":duration};
+		$.ajax({
+			type: 'POST',
+			url: '../cgi-bin/savetofile.py',//url of receiver file on server
+			dataType: "json",
+			data: JSON.stringify(backgroundjson), //your data
+			success: function (response) {
+				window.location.replace('main_1 - Copy (54).html');
+			}
+		});
+        });
+    }    
+</script>
+    </body>
+</html>

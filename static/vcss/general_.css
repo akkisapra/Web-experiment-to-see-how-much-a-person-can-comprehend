@@ -1,0 +1,105 @@
+body {font-size:24px;}
+h1 {font-size:50px;}
+h2 {font-size:40px;}
+h3 {font-size:34px;}
+h4 {font-size:30px;}
+
+button{font-size:24px;width:400px;height:80px;}
+button:hover{cursor:pointer}
+
+.replays{width:150px;}
+
+.warning{color:red;}
+
+.footerContacts{display:inline-block;margin-left:10px;margin-right:10px;}
+
+label{font-size:28px;}
+
+.main_div{margin-left:50px; margin-right:50px;}
+.survey_img{border:0px solid black; padding:20px}
+.survey_img_ref{width:300px; padding:20px}
+#tutorialtext{font-size:32px; font-family:Arial}
+
+
+ #imagewrapper600{min-height:200px;}
+
+.child circle {fill: none;}
+
+label {cursor:pointer}
+input {cursor: pointer}
+
+ /*#manswers {width:980px;}*/
+ /*2 px of border on each side +2 for when it gets highlighted*/
+ #manswers {width:1112px;}
+.mymradio { width:300px; height:300px; line-height: 300px;text-align: center; margin-left: 0px; margin-right: 0px; margin-bottom:50px; border:1px solid black; cursor:pointer; font-weight:bold; font-size:24px;float:left}
+.myradio { width:300px; height:100px; line-height: 100px;text-align: center; margin: 10px; border:1px solid black; cursor:pointer; font-weight:bold; font-size:24px;float:left}
+ #answers {width:990px;}
+ 
+ .mymradio#B {margin-left:100px;margin-right:100px;}
+ .mymradio#unsure {margin-left:100px;width:100px; height:300px;}
+ 
+ #imagewrapper_dense{height:600px; }
+
+ .survey_img_dense{ padding: 0px 50px 0px 50px;}
+ /*.survey_img_dense{ padding: 0px 50px 0px 100px; }*/
+ 
+ #danswers {width:1308px;}
+.mydradio { width:600px; height:600px; line-height: 600px;text-align: center; margin-top:50px; margin-left: 0px; margin-right: 0px; margin-bottom:20px; border:1px solid black; cursor:pointer; font-weight:bold; font-size:24px;float:left}
+ .mydradio#B {margin-left:75px;}
+ .mydradio#unsure {margin-left:20px;width:100px; height:600px;}
+
+ 
+ .progressbar {
+  width: 80%;
+  margin: 25px auto;
+  border: solid 1px #000;
+}
+.progressbar .inner {
+  height: 15px;
+  animation: progressbar-countdown;
+  /* Placeholder, this will be updated using javascript */
+  animation-duration: 40s;
+  /* We stop in the end */
+  animation-iteration-count: 1;
+  /* Stay on pause when the animation is finished finished */
+  animation-fill-mode: forwards;
+  /* We start paused, we start the animation using javascript */
+  animation-play-state: paused;
+  /* We want a linear animation, ease-out is standard */
+  animation-timing-function: linear;
+}
+@keyframes progressbar-countdown {
+  0% {
+    width: 100%;
+    background: #0F0;
+  }
+  100% {
+    width: 0%;
+    background: #F00;
+  }
+}
+
+table.GraphTable {
+  max-width: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  border-collapse: collapse;
+  border-width: 0px;
+  border-color: gray;
+  border-style: solid;
+  color: #000000;
+  margin: 0px;
+  padding: 0px;
+}
+
+table.GraphTable td, table.GraphTable th {
+  border-width: 0%;
+  border-color: gray;
+  border-style: solid;
+  padding: 0px;
+  margin: 0px;
+}
+
+table.GraphTable thead {
+  background-color: white;
+}

@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Data Visualisation Study</title>
+<link href="../vcss/general.css" rel="stylesheet" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+ function init(){
+     start = new Date().getTime();    
+     
+ }
+ 
+window.onload=init;
+ 
+</script>
+
+</head>
+<body>
+	<div class="main_div"  align=left>
+				<h4>Bar Chart</h4>
+        <p>You can see below a typical example of a <span style ="color:red">Bar Chart</span>. In this graph, there are <span style ="color:red">five</span> bars present.</p>
+                <img id="barchart" src="../images/new_graphs/demo/23.PNG" height ="500" width="600" align ="absolute" />
+        
+                <h4 >Which describes your situation best?</h4>
+                <input type="radio" name="mygroup1" id="mc" value="never"/>
+                <label for="never">I have never seen Bar Chart</label> 
+        <br>
+                
+                <input type="radio" name="mygroup1" id="mc" value="seldom" />
+                <label for="moderate">I occasionally see Bar Chart</label> 
+        <br>
+
+                <input type="radio" name="mygroup1" id="mc" value="often" />
+                <label for="expert">I often see Bar Chart</label>
+            
+        <br>
+        <br>
+		<div align="center">
+			<button type="button" id="next" onclick = "window.location.href = 'training_1.html';">Previous</button>
+			<button type="button" id="next" onclick = next()>Next</button>
+		</div>
+    </div>
+ <script>
+           function next(){
+      
+        if (!document.querySelectorAll('input[name=mygroup1]:checked').length) {
+            alert("Please answer all the questions.");
+             return;
+        }
+        
+        save()
+    }
+    
+function save(){
+    d3.json("../data/users.json",function(strUsers){
+        var users = JSON.parse(strUsers);
+		userid = users.usercount;
+        var answers= document.querySelector('input[name="mygroup1"]:checked').value;
+        var end = new Date().getTime();
+		var duration = end - start;
+        var savejson = {"filename":"Barchart","userid":userid,"answers":answers, "duration":duration};
+		$.ajax({
+			type: 'POST',
+			url: '../cgi-bin/savetofile.py',//url of receiver file on server
+			dataType: "json",
+			data: JSON.stringify(savejson), //your data
+			success: function (response) {
+				window.location.replace('/static/train/training_3.html');
+			}
+		});
+        
+    });
+    
+}
+</script>
+</body>
+</html>

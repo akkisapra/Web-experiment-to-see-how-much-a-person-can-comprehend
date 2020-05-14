@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Data Visualisation Study</title>
+<link href="../vcss/general.css" rel="stylesheet" type="text/css">
+
+
+<script>
+    
+    
+    function next_ques(){
+     if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer the question!");
+             return;
+        }
+        else{
+            if (document.querySelector('input[name=mc]:checked').value!='Bar Chart') {
+            alert("Correct Answer for this question is Bar Chart");
+             return;
+                }
+            else{
+                alert("Correct Answer")
+            }
+            }   
+        var que = document.getElementById("quiz");
+        que.innerHTML = "<p>How many elements (lines, clusters, bars, sections/slices) are present in the Graphic ?</p>\
+            <input  type	= 'radio'  name	= 'mc'  value = '1' required> 1 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '2'> 2 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '3'> 3 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '4'> 4 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '5'> 5 <br>\
+        <div align='center'><br><br>			<button type='button' id='next' onclick = move()>Next</button>		</div>";    
+    };
+   
+    
+function move(){
+    if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer all the questions.");
+             return;
+        }
+    else{
+            if (document.querySelector('input[name=mc]:checked').value!='5') {
+            alert("Correct Answer for this question is 5");
+             return;
+                }
+        
+            else{
+                alert("Correct Answer")
+            }
+        
+            }
+    window.location.replace('/static/train/training_3_3.html');
+}
+  
+   
+</script>
+
+</head>
+<body>
+	<div class="main_div" align=left>
+<!--			<div style="min-height:100px; ">-->
+				<h4>Sample Questions</h4>
+                <img id="linechart" src="../images/new_graphs/demo/37.PNG" align = center height ="500" width="600" />
+                <br>
+
+            
+            <form id ="quiz" name ="quiz" align =left>
+            <p> What kind of graph do you see ?</p>
+                    <input type ='radio' name ='mc' value ='Scatter Plot' required>Scatter Plot<br><br>
+                    <input type ='radio' name ='mc' value ='Line Graph' required>Line Graph<br><br>
+                    <input type ='radio' name ='mc' value ='Bar Chart' required>Bar Chart<br><br>
+                    <input type ='radio' name ='mc' value ='Pie Chart' required>Pie Chart<br><br>
+                    <input type ='radio' name ='mc' value ='Node Link Diagram' required >Node Link Diagram<br>
+
+        
+            
+		<div align="center">
+<!--			<button type="button" id="previous">Previous</button>-->
+			<button type="button" id="next" onclick = next_ques()>Next</button>
+		</div>
+	
+    </form> 
+        <pre id="log">
+         </pre>
+    </div>
+    
+   
+</body>
+</html>

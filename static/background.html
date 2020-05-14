@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>User Survey</title>
+<link href="vcss/general.css" rel="stylesheet" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<script>
+var userid;
+var start;
+var prev;
+
+function init(){
+	start = new Date().getTime();
+	
+	$.ajax({
+		type: 'POST',
+		url: "cgi-bin/updateuserid.py", // this is just a url that is responsible to return files list 
+		data: "{}",
+		dataType: "json",
+		success: function (response) {
+			userid = response.user;
+			if (userid == 0) alert("folder exists");
+			console.log(userid);
+		},
+		error: function (myerror) {
+			alert(myerror);
+		}
+
+	});
+	
+	var myresults = [];
+
+
+    document.getElementById('next').onclick=function(){
+//        window.location.replace('/static/train/training_1.html');
+		var end = new Date().getTime();
+		var duration = end - start;
+		
+		for (var radioname = 1; radioname < 3; radioname++){
+            var group ='mygroup'+String(radioname)
+			var radios = document.getElementsByName(group);
+            if (!document.querySelectorAll('input[name='+group+']:checked').length){
+            alert("Please answer all the questions!");
+             return;
+            }
+            
+			for (var i = 0, length = radios.length; i < length; i++) {
+				if (radios[i].checked) {
+					myresults.push(radios[i].value);
+					break;
+				}
+			}		
+		}
+		
+		
+		//var answers = [myresult1, myresult2];
+		var answers = myresults;
+
+		var backgroundjson = {"filename":"background","userid":userid,"answers":answers, "duration":duration};
+		$.ajax({
+			type: 'POST',
+			url: 'cgi-bin/savetofile.py',//url of receiver file on server
+			dataType: "json",
+			data: JSON.stringify(backgroundjson), //your data
+			success: function (response) {
+				window.location.replace('/static/train/training_1.html');
+			}
+		});
+	}
+}
+	
+window.onload=init;
+</script>
+
+</head>
+<body>
+	<div class="main_div">
+    <h2> User Survey</h2>
+	<h4>What describes your gender best?</h4>
+	<input type="radio" name="mygroup1" id="male" value="male"  />
+	<label for="male">Male</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup1" id="female" value="female" />
+	<label for="female">Female</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup1" id="other" value="other" />
+	<label for="other">Other/Intersex</label>
+	
+	<br />
+	<br />
+	
+	<h4>Which range does your age fall into?</h4>
+	<input type="radio" name="mygroup2" id="-20" value="-20"  />
+	<label for="-20"> &lt;20 </label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup2" id="20-30" value="20-30" />
+	<label for="20-30">20-30</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup2" id="30-40" value="30-40" />
+	<label for="30-40">30-40</label>
+	<br />
+	<br />
+	<input type="radio" name="mygroup2" id="40-50" value="40-50" />
+	<label for="40-50">40-50</label>
+	<br />
+	<br />
+	<input type="radio" name="mygroup2" id="50-" value="50-" />
+	<label for="50-"> &gt;50</label>
+	
+	<br />
+	<br />
+        
+<!--
+    <h4>Have you ever worked on Statistical Charts (Line Graphs, Bar Chart, etc.)?</h4>
+	<input type="radio" name="mygroup3" id="yes" value="yes"  />
+	<label for="yes">Yes</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup3" id="no" value="no" />
+	<label for="no">No</label> 
+	<br />
+-->
+    
+   
+    
+	<div align=center>
+	<button type="button" id="next">Next</button>
+	</div>
+    </div>
+        
+</body>
+</html>

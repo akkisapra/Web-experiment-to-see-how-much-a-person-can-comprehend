@@ -1,0 +1,159 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Data Visualisation Study</title>
+<link href="../vcss/radio.css" rel="stylesheet" type="text/css">
+<!--<script src='../js/stats.js-master/build/stats.min.js'>  </script>-->
+
+<script>
+   
+    function next_que(){
+        if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer the question.");
+             return;
+        }
+        if (document.querySelector('input[name=mc]:checked').value!='Node Link Diagram') {
+            linechart.style.display = "inline";
+            alert("This was a Node Link Diagram");
+             return;
+        }
+        else{
+            que.innerHTML="<br><br><br><br><p><span style ='color:Green'>Correct Answer</span></p>"
+            setTimeout(question,1000)
+        }
+    
+        linechart.style.display = "none";
+        
+    };
+    
+    function question(){
+        que.innerHTML = "<p>How many elements (lines, clusters, bars, sections/slices) are present in the Graphic ?</p>\
+            <input  type	= 'radio'  name	= 'mc'  value = '1' required> 1 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '2'> 2 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '3'> 3 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '4'> 4 <br>\
+            <input  type	= 'radio'  name	= 'mc'  value = '5'> 5 <br>\
+        <div align='center'><br><br>			<button type='button' id='next' onclick = move()>Next</button>		</div>";
+    }
+    
+    function move(){
+        if (!document.querySelectorAll('input[name=mc]:checked').length) {
+            alert("Please answer the question.");
+             return;
+        };
+        if (document.querySelector('input[name=mc]:checked').value!='2') {
+            alert("There were 2 clusters in the diagram");
+            linechart.style.display = "inline";
+             return;
+        }
+        else{
+            que.innerHTML="<br><br><br><br><p><span style ='color:Green'>Correct Answer</span></p>"
+            setTimeout(function(){window.location.href = "training_14.html"},1000)
+        }
+    }
+    </script>
+
+</head>
+<body >
+    <form method="POST">
+	<div class="main_div" align=left>
+		<div style="min-height:100px; ">
+            <h4 id ='header'>Try to Focus on the <span style ="color:red">red plus</span> on the center of the screen.            
+            A graph will be displayed for <span style ="color:red"> <b>1 SECOND</b></span>, try to look at it and answer the questions</h4>
+                <div style="min-height:100px;" align ="center">
+                <img id="redcross" src="../images/tutorial/red_cross.jpg" height="400" width="500"/>
+                <img id="linechart" src="../images/new_graphs/main/209.PNG" height ="400" width="500" align ="absolute"/>
+                <img id="grid" src="../images/grid/grid.jpg" height ="400" width="500" />
+                <div id='space' style="background-color:red; min-height:50px; line-height: 50px; text-align: center; width:800px; margin-top:80px">
+				<p style="font-weight:bold; color:white">TRAINING : PRESS SPACE WHEN READY</p>
+			    </div>
+                <form id="task">
+                <div id = "que"  >
+                    <p> What kind of graph do you see ?</p>
+                    <input type ='radio' name ='mc' value ='Scatter Plot' required>Scatter Plot<br><br>
+                    <input type ='radio' name ='mc' value ='Line Graph' required>Line Graph<br><br>
+                    <input type ='radio' name ='mc' value ='Bar Chart' required>Bar Chart<br><br>
+                    <input type ='radio' name ='mc' value ='Pie Chart' required>Pie Chart<br><br>
+                    <input type ='radio' name ='mc' value ='Node Link Diagram' required >Node Link Diagram<br>
+                    <div align='center'>
+                    <br><br>			
+                    <button type='button' id='next' onclick = next_que()>Next</button>	
+                    </div>
+                    
+                </div>
+                 </form>
+                    <pre id="log">
+                    </pre>
+        </div>
+    </div>
+        </div>
+    </form>
+    <script>
+
+          var linechart = document.getElementById("linechart");
+          var grid = document.getElementById("grid");
+          var redcross = document.getElementById("redcross");
+          var space = document.getElementById("space");
+          var que = document.getElementById("que");
+          var header = document.getElementById("header");
+          var log = document.getElementById("log");
+          var reqanimationreference;
+          var time;
+//          var stats = new Stats();
+          var key = 0;
+         
+//        stats.showPanel(1); // 0: fps, 1: ms, 2: mb, 3+: custom
+//        document.body.appendChild( stats.dom );
+
+          linechart.style.display = "none";
+          grid.style.display = "none";
+          que.style.display = "none";
+          redcross.style.display='inline'
+          
+        document.body.onkeyup = function(e){
+    if(e.keyCode == 32){
+        key++;
+        if (key ==1){
+                 window.requestAnimationFrame(show)
+                    setTimeout(hide,1000);
+                }
+        
+                }
+            };
+        
+        function hide(){
+            window.requestAnimationFrame(function(){
+            linechart.style.display = "none";
+            redcross.style.display='none' ;
+            grid.style.display = "inline";
+//            stats.end();
+            
+            setTimeout(ques,16);
+            })
+
+        };
+        
+        function show(){
+//            stats.begin();
+            header.style.display = "none";
+            redcross.style.display='none';
+            linechart.style.display = "inline";
+            grid.style.display = "none";
+            space.innerHTML = "";
+            space.style.display='none';
+
+        };
+        
+        function ques(){
+            window.requestAnimationFrame(function(){ 
+             redcross.style.display='none';
+            linechart.style.display = "none";
+            grid.style.display = "none";
+            que.style.display='block'
+            que.style.textAlign='center'
+            })
+        }
+    </script>
+    </body>
+</html>
