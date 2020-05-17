@@ -39,7 +39,7 @@ function init(){
 		var end = new Date().getTime();
 		var duration = end - start;
 		
-		for (var radioname = 1; radioname < 3; radioname++){
+		for (var radioname = 1; radioname < 4; radioname++){
             var group ='mygroup'+String(radioname)
 			var radios = document.getElementsByName(group);
             if (!document.querySelectorAll('input[name='+group+']:checked').length){
@@ -113,10 +113,26 @@ window.onload=init;
 	<br />
 	<input type="radio" name="mygroup2" id="50-" value="50-" />
 	<label for="50-"> &gt;50</label>
-	
 	<br />
 	<br />
         
+    <h4>Which device are you using for this experiment  does your age fall into?</h4>
+	<input type="radio" name="mygroup3" id="PC" value="PC"  />
+	<label for="PC">Personal Computer or Desktop machine </label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup3" id="Laptop" value="Laptop" />
+	<label for="Laptop">Laptop</label> 
+	<br />
+	<br />
+	<input type="radio" name="mygroup3" id="Mobile" value="Mobile" />
+	<label for="Mobile">Mobile or Tablet</label>
+	<br />
+	<br />
+	<input type="radio" name="mygroup3" id="Other" value="Other" />
+	<label for="Other">Other</label>
+	<br />
+	<br />  
 <!--
     <h4>Have you ever worked on Statistical Charts (Line Graphs, Bar Chart, etc.)?</h4>
 	<input type="radio" name="mygroup3" id="yes" value="yes"  />

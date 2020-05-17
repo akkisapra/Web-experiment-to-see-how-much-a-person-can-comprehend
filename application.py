@@ -71,7 +71,7 @@ def savetofile():
         elif (filename.find('main_') != -1):
             logfile.write(str(filename)+' main_'+str(userid)+'\n')
             file = open('static//users//'+str(userid)+'//'+filename+'.json','w')
-            file.write(json.dumps({'answers':answers, 'duration':input['duration']}))
+            file.write(json.dumps({'answers':answers, 'duration':input['duration'],'start_time':input['start_time']}))
             
         if (filename.find('tute') != -1):
             thefilename = 'static//users//'+str(userid)+'//tutorial.json'

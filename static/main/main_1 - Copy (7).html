@@ -6,7 +6,8 @@
 <link href="../vcss/radio.css" rel="stylesheet" type="text/css">
 <!--<script src='../js/stats.js-master/build/stats.min.js'>  </script>-->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-<script src="https://d3js.org/d3.v3.min.js"></script>    
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script> var tim = new Date()</script>    
 
 
 </head>
@@ -88,7 +89,7 @@
             grid.style.display = "inline";
 //            stats.end();
             
-            setTimeout(ques,16);
+            setTimeout(ques,96);
             })
 
         };
@@ -156,7 +157,7 @@
         d3.json("../data/users.json",function(strUsers){
         var users = JSON.parse(strUsers);
 		userid = users.usercount;
-        var backgroundjson = {"filename":"main_8","userid":userid,"answers":ans, "duration":duration};
+        var backgroundjson = {"filename":"main_8","userid":userid,"answers":ans, "duration":duration, "start_time":tim};
 		$.ajax({
 			type: 'POST',
 			url: '../cgi-bin/savetofile.py',//url of receiver file on server
