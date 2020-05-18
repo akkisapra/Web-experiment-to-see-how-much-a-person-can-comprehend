@@ -175,7 +175,13 @@ def updateuserid():
     
     theerror = 0
     directory = "static/users/"+str(thecount+1)
+    print("line 178")
+    print(os.path.exists(directory))
+    print(directory)
     if not os.path.exists(directory):
+        print("179")
+        print(os.path.exists(directory))
+
         os.makedirs(directory)
     else:
         theerror = 1
