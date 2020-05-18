@@ -169,7 +169,9 @@ def updateuserid():
     usersjson = json.load(file)
     file.close()
     thecount = usersjson['usercount']
+    print(str(thecount))
     logfile.write(str(thecount))
+    print(usersjson)
     
     theerror = 0
     directory = "static/users/"+str(thecount+1)
