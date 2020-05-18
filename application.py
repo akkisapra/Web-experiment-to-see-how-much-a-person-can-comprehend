@@ -165,14 +165,14 @@ def savetofile():
 def updateuserid():
 
     logfile = open("log.txt","w")
-    file = open("/static/data/users.json", "r")
+    file = open("static/data/users.json", "r")
     usersjson = json.load(file)
     file.close()
     thecount = usersjson['usercount']
     logfile.write(str(thecount))
     
     theerror = 0
-    directory = "/static/users/"+str(thecount+1)
+    directory = "static/users/"+str(thecount+1)
     if not os.path.exists(directory):
         os.makedirs(directory)
     else:
@@ -180,7 +180,7 @@ def updateuserid():
 
     if (theerror == 0):
         usersjson['usercount'] = usersjson['usercount'] + 1
-        file = open("/static/data/users.json", "w")
+        file = open("static/data/users.json", "w")
         file.write(json.dumps(usersjson))
         jsonresponse = {'user':(thecount+1)}
     else:
