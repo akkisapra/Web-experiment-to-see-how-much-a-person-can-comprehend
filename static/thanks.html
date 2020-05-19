@@ -20,10 +20,10 @@ d3.json('data/users.json',function(strUsers){
 			dataType: "json",
 			data: JSON.stringify(backgroundjson), //your data
 			success: function (response) {
-				window.location.replace('index.html');
+				alert("Experiment is Over, you can close the tab")
 			},
 			error: function (myerror) {
-				window.location.replace('index.html');
+				alert("Experiment is Over, you can close the tab")
 			}
 		});
 	};
