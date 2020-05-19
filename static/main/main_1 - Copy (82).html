@@ -157,14 +157,14 @@
         d3.json("../data/users.json",function(strUsers){
         var users = JSON.parse(strUsers);
 		userid = users.usercount;
-        var backgroundjson = {"filename":"main_1","userid":userid,"answers":ans, "duration":duration, "start_time":tim};
+        var backgroundjson = {"filename":"main_83","userid":userid,"answers":ans, "duration":duration, "start_time":tim};
 		$.ajax({
 			type: 'POST',
 			url: '../cgi-bin/savetofile.py',//url of receiver file on server
 			dataType: "json",
 			data: JSON.stringify(backgroundjson), //your data
 			success: function (response) {
-				window.location.replace('main_1 - Copy.html');
+				window.location.replace('main_1 - Copy (83).html');
 			}
 		});
         });
