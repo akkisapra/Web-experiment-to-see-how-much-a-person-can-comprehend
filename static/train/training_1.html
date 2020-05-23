@@ -63,7 +63,7 @@ function save(){
         var answers= document.querySelector('input[name="mygroup1"]:checked').value;
         var end = new Date().getTime();
 		var duration = end - start;
-        var savejson = {"filename":"Barchart","userid":userid,"answers":answers, "duration":duration};
+        var savejson = {"filename":"Linegraphs","userid":userid,"answers":answers, "duration":duration};
 		$.ajax({
 			type: 'POST',
 			url: '../cgi-bin/savetofile.py',//url of receiver file on server
